@@ -15,9 +15,13 @@ import {
   FaRegCheckCircle,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import BookkedSuccessfully from "./BookkedSuccessfully";
+// import BookkedSuccessfully from "./BookkedSuccessfully";
 
-export default function BookConsultationForm({ id, consultation, transaction }) {
+export default function BookConsultationForm({
+  id,
+  consultation,
+  transaction,
+}) {
   const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [isOpen, setIsOpen] = useState(0);
   const [allSlot, setAllSlot] = useState([]);
@@ -36,7 +40,7 @@ export default function BookConsultationForm({ id, consultation, transaction }) 
   useEffect(() => {
     const fetchSlots = async () => {
       try {
-        const consultationUrl = `${apiUrl}/dubai/check-slots?id=${88}&date=${dayjs().format(
+        const consultationUrl = `${apiUrl}/dubai/check-slots?id=${104}&date=${dayjs().format(
           "YYYY-MM-DD"
         )}`;
         const response = await fetch(consultationUrl);
@@ -65,39 +69,39 @@ export default function BookConsultationForm({ id, consultation, transaction }) 
     return daysList;
   };
 
-//   const categorizeAppointments = (appointments) => {
-//     const categories = {
-//       Morning: [],
-//       Afternoon: [],
-//       Evening: [],
-//       LateEvening: [],
-//     };
+  //   const categorizeAppointments = (appointments) => {
+  //     const categories = {
+  //       Morning: [],
+  //       Afternoon: [],
+  //       Evening: [],
+  //       LateEvening: [],
+  //     };
 
-//     appointments.forEach((appointment) => {
-//       const { appointment_slots } = appointment;
-//       const [startTime, period] = appointment_slots.split(" ");
-//       const [hour, minute] = startTime.split(":").map(Number);
+  //     appointments.forEach((appointment) => {
+  //       const { appointment_slots } = appointment;
+  //       const [startTime, period] = appointment_slots.split(" ");
+  //       const [hour, minute] = startTime.split(":").map(Number);
 
-//       let timeIn24HrFormat =
-//         period === "am" && hour === 12
-//           ? 0
-//           : period === "pm" && hour !== 12
-//           ? hour + 12
-//           : hour;
+  //       let timeIn24HrFormat =
+  //         period === "am" && hour === 12
+  //           ? 0
+  //           : period === "pm" && hour !== 12
+  //           ? hour + 12
+  //           : hour;
 
-//       if (timeIn24HrFormat >= 6 && timeIn24HrFormat < 12) {
-//         categories.Morning.push(appointment);
-//       } else if (timeIn24HrFormat >= 12 && timeIn24HrFormat < 16) {
-//         categories.Afternoon.push(appointment);
-//       } else if (timeIn24HrFormat >= 16 && timeIn24HrFormat < 20) {
-//         categories.Evening.push(appointment);
-//       } else {
-//         categories.LateEvening.push(appointment);
-//       }
-//     });
+  //       if (timeIn24HrFormat >= 6 && timeIn24HrFormat < 12) {
+  //         categories.Morning.push(appointment);
+  //       } else if (timeIn24HrFormat >= 12 && timeIn24HrFormat < 16) {
+  //         categories.Afternoon.push(appointment);
+  //       } else if (timeIn24HrFormat >= 16 && timeIn24HrFormat < 20) {
+  //         categories.Evening.push(appointment);
+  //       } else {
+  //         categories.LateEvening.push(appointment);
+  //       }
+  //     });
 
-//     return categories;
-//   };
+  //     return categories;
+  //   };
 
   const categorizeAppointmentss = (appointments) => {
     const categories = {
@@ -183,14 +187,14 @@ export default function BookConsultationForm({ id, consultation, transaction }) 
 
     const firstAvailableSlot = slots.find((slot) => slot.available);
 
-    if(firstAvailableSlot.id < 5) {
-        setIsOpen(0);
-    } else if(firstAvailableSlot.id < 13) {
-        setIsOpen(1);
-    } else if(firstAvailableSlot.id < 20) {
-        setIsOpen(2);
+    if (firstAvailableSlot.id < 5) {
+      setIsOpen(0);
+    } else if (firstAvailableSlot.id < 13) {
+      setIsOpen(1);
+    } else if (firstAvailableSlot.id < 20) {
+      setIsOpen(2);
     } else {
-        setIsOpen(3);
+      setIsOpen(3);
     }
     return categories;
   };
@@ -199,7 +203,7 @@ export default function BookConsultationForm({ id, consultation, transaction }) 
     setLoading(true);
     setDate(data);
     // setIsOpen(0);
-    const consultationUrl = `${apiUrl}/dubai/check-slots?id=${88}&date=${data}`;
+    const consultationUrl = `${apiUrl}/dubai/check-slots?id=${104}&date=${data}`;
     try {
       const response = await fetch(consultationUrl);
       const responseData = await response.json();
@@ -272,12 +276,9 @@ export default function BookConsultationForm({ id, consultation, transaction }) 
     }
 
     setConfirmModal(true);
+  };
 
-    
-};
-
-const handleBooked = async () => {
-    
+  const handleBooked = async () => {
     const data = {
       schedule_date: date,
       slot_id: slot.id,
@@ -285,16 +286,16 @@ const handleBooked = async () => {
     };
     const responses = await axios.post(url, data);
     console.log("Form submitted successfully:", responses.data);
-    
+
     if (responses.data?.status == "success") {
       toast.success("Consultation Booked Successfully...");
       setConfirmModal(false);
       setIsModalOpen(true); //
-    } else { 
-        toast.error("Failed to book consultation");
-        setConfirmModal(false);
+    } else {
+      toast.error("Failed to book consultation");
+      setConfirmModal(false);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-screen bg-gray-100">
@@ -414,31 +415,38 @@ const handleBooked = async () => {
         >
           <div className="w-84 h-68 bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center text-center">
             <div>
-            <FaRegCheckCircle className="text-green-500 text-5xl mb-2" />
+              <FaRegCheckCircle className="text-green-500 text-5xl mb-2" />
             </div>
             <h2 className="text-lg font-semibold text-gray-700 mb-2">
               Booking Confirmed!
             </h2>
             <p className="text-sm font-medium">ID: 542135656</p>
             <p className="text-sm mt-2 font-medium text-gray-500 mb-4">
-              Comfirmation email and message has been sent <br />to your registered details 
+              Comfirmation email and message has been sent <br />
+              to your registered details
             </p>
 
             <div className="flex flex-col items-center mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <FaCalendarAlt className="text-blue-500" />
                 <span className="text-sm font-medium text-gray-600">
-                  {dayjs(date).format("dddd")}, {dayjs(date).format("DD MMM YYYY")}
+                  {dayjs(date).format("dddd")},{" "}
+                  {dayjs(date).format("DD MMM YYYY")}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <FaClock className="text-yellow-500" />
-                <span className="text-sm font-medium text-gray-600">{(slot.time)?.toUpperCase()}</span>
+                <span className="text-sm font-medium text-gray-600">
+                  {slot.time?.toUpperCase()}
+                </span>
               </div>
             </div>
 
             <button
-              onClick={() => navigate("/")}
+              onClick={() => {
+                // navigate("/congrats", { replace: true, state: null });
+                navigate("/", { replace: true, state: null });
+              }}
               className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200"
             >
               Alright !

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ProfileCard from "./Card";
-import RazorpayPayment from "./Payment";
+import ConsultationCard from "./Card";
+import RazorpayPayment from "../components/Payment";
 
-export default function Home() {
+export default function Consultation() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -13,10 +13,10 @@ export default function Home() {
             isModalOpen ? "[transform:rotateY(180deg)]" : ""
           }`}
         >
-          <div className="absolute w-full h-full [backface-visibility:hidden] flex justify-center items-center  text-xl rounded-lg ">
-            <ProfileCard setModalControl={setIsModalOpen} />
+          <div className="absolute w-full h-full [backface-visibility:hidden] flex justify-center items-center rounded-lg ">
+            <ConsultationCard setModalControl={setIsModalOpen} />
           </div>
-          <div className="absolute w-full h-full [backface-visibility:hidden] flex justify-center items-center  text-xl rounded-lg  [transform:rotateY(180deg)]">
+          <div className="absolute w-full h-full [backface-visibility:hidden] flex justify-center items-center rounded-lg  [transform:rotateY(180deg)]">
             <RazorpayPayment setModal={setIsModalOpen} />
           </div>
         </div>

@@ -10,7 +10,7 @@ import { FaLocationDot, FaXTwitter } from "react-icons/fa6";
 import { IoEarthOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
-const ProfileCard = ({ setModalControl }) => {
+const WorkshopCard = ({ setModalControl }) => {
   const data = {
     name: "Khyati Rupani",
     image:
@@ -25,21 +25,19 @@ const ProfileCard = ({ setModalControl }) => {
       youtube: "https://www.youtube.com/channel/UCRBg_eWt2yJreg8AZXPGvKA",
       website: "https://balancenutrition.in/",
     },
-    amount: 100,
+    amount: 50,
     currency: "AED",
-    location: "Bur Dubai",
-    date: "29th & 30th Jan 2025",
-    fee_name: "Consultation Fees",
+    location: "India Club, Dubai",
+    date: "29th Jan 2025",
+    fee_name: "Workshop Fees",
     mentor_id: 104,
-    card_title: "Book Your Personal Consultation"
+    card_title: "Nutrition Workshop hosted by IWD",
   };
   // }
   return (
     <div className="md:w-[420px] bg-white shadow-lg rounded-xl overflow-hidden border-[2px] border-gray-100 mx-4">
       <div className="bg-[#3FBEC9]">
-        <p className="text-center py-2 font-semibold text-white text-base">
-          {data.card_title}
-        </p>
+        <p className="text-center py-2 font-semibold text-white text-base">{data.card_title}</p>
       </div>
       <div className="relative">
         {/* <img
@@ -130,7 +128,7 @@ const ProfileCard = ({ setModalControl }) => {
       </div>
 
       <p className="text-center text-base md:text-lg text-gray-500 mt-3">
-        {data.fee_name}:{" "}
+        {data.fee_name} :{" "}
         <span className="font-medium text-green-700">
           {data.currency} {data.amount}
         </span>
@@ -201,4 +199,4 @@ const ProfileCard = ({ setModalControl }) => {
   );
 };
 
-export default ProfileCard;
+export default WorkshopCard;
