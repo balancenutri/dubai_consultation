@@ -30,6 +30,8 @@ export default function BookConsultationForm({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
 
+  const [loadingBooking, setLoadingBooking] = useState(false);
+
   const navigate = useNavigate();
   //   console.log(date);
   //   console.log(slot);
@@ -278,22 +280,52 @@ export default function BookConsultationForm({
     setConfirmModal(true);
   };
 
+  // const handleBooked = async () => {
+  //   const data = {
+  //     schedule_date: date,
+  //     slot_id: slot.id,
+  //     consultation_id: consultation,
+  //   };
+  //   const responses = await axios.post(url, data);
+  //   console.log("Form submitted successfully:", responses.data);
+
+  //   if (responses.data?.status == "success") {
+  //     toast.success("Consultation Booked Successfully...");
+  //     setConfirmModal(false);
+  //     setIsModalOpen(true); //
+  //   } else {
+  //     toast.error("Failed to book consultation");
+  //     setConfirmModal(false);
+  //   }
+  // };
+
   const handleBooked = async () => {
+    // Set the loading state to true when starting the API call
+    setLoadingBooking(true);
+
     const data = {
       schedule_date: date,
       slot_id: slot.id,
       consultation_id: consultation,
     };
-    const responses = await axios.post(url, data);
-    console.log("Form submitted successfully:", responses.data);
 
-    if (responses.data?.status == "success") {
-      toast.success("Consultation Booked Successfully...");
-      setConfirmModal(false);
-      setIsModalOpen(true); //
-    } else {
-      toast.error("Failed to book consultation");
-      setConfirmModal(false);
+    try {
+      const responses = await axios.post(url, data);
+      console.log("Form submitted successfully:", responses.data);
+
+      if (responses.data?.status === "success") {
+        toast.success("Consultation Booked Successfully...");
+        setConfirmModal(false);
+        setIsModalOpen(true);
+      } else {
+        toast.error("Failed to book consultation");
+        setConfirmModal(false);
+      }
+    } catch (error) {
+      console.error("Booking error:", error);
+      toast.error("An error occurred while booking");
+    } finally {
+      setLoadingBooking(false);
     }
   };
 
@@ -454,7 +486,11 @@ export default function BookConsultationForm({
           </div>
         </div>
       )}
-      {confirmModal && (
+      {confirmModal && (loadingBooking ? (
+        <div className="flex justify-center items-center py-4 fixed inset-0 bg-black bg-opacity-20">
+          <FaSpinner className="animate-spin text-blue-500" size={50} />
+        </div>
+      ) : (
         <div
           id="modal"
           className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center"
@@ -501,7 +537,7 @@ export default function BookConsultationForm({
             </div>
           </div>
         </div>
-      )}
+      ))}
     </div>
   );
 }
