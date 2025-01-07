@@ -17,7 +17,7 @@ export default function Workshop() {
             <WorkshopCard setModalControl={setIsModalOpen} />
           </div>
           <div className="absolute w-full h-full [backface-visibility:hidden] flex justify-center items-center rounded-lg  [transform:rotateY(180deg)]">
-            <RazorpayPayment setModal={setIsModalOpen} />
+            <RazorpayPayment setModal={setIsModalOpen} amount={50} />
           </div>
         </div>
       </div>

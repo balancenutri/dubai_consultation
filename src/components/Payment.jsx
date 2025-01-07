@@ -3,15 +3,14 @@ import React, { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineLocalPhone, MdOutlineMail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import BnLogo from "../assets/bn_logo.png"
 
-const RazorpayPayment = ({ setModal }) => {
+const RazorpayPayment = ({ setModal, amount }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [errors, setErrors] = useState({}); // For form validation errors
   const navigate = useNavigate();
-
-  const amount = 1000;
 
   const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
@@ -22,9 +21,11 @@ const RazorpayPayment = ({ setModal }) => {
     const errors = {};
     if (!name.trim()) errors.name = "Name is required";
     if (!email.trim()) errors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(email)) errors.email = "Invalid email address";
+    else if (!/\S+@\S+\.\S+/.test(email))
+      errors.email = "Invalid email address";
     if (!phone.trim()) errors.phone = "Phone number is required";
-    else if (!/^\d{8,15}$/.test(phone)) errors.phone = "Phone must greater than 7 digit or less than 15 digit";
+    else if (!/^\d{8,15}$/.test(phone))
+      errors.phone = "Phone must greater than 7 digit or less than 15 digit";
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -57,7 +58,8 @@ const RazorpayPayment = ({ setModal }) => {
       if (!value.trim()) {
         fieldErrors.phone = "Phone number is required";
       } else if (!/^\d{8,15}$/.test(value)) {
-        fieldErrors.phone = "Phone must greater than 7 digit or less than 15 digit";
+        fieldErrors.phone =
+          "Phone must greater than 7 digit or less than 15 digit";
       } else {
         delete fieldErrors.phone;
       }
@@ -126,8 +128,11 @@ const RazorpayPayment = ({ setModal }) => {
   };
 
   return (
-    <div className="md:w-[420px] bg-white shadow-lg rounded-xl px-6 py-8 mx-4">
-      <h2 className="text-center -mt-5 text-2xl font-semibold text-gray-800 mb-4">
+    <div className="md:w-[420px] bg-white shadow-lg rounded-xl px-6 py-8 mx-2">
+      <div className="flex justify-center -mt-2">
+        <img src={BnLogo}  alt="" srcSet="" className="size-10 object-contain rounded-md" />
+      </div>
+      <h2 className="text-center text-2xl font-semibold text-gray-800 mb-4">
         Enter Your Details
       </h2>
 
@@ -146,7 +151,10 @@ const RazorpayPayment = ({ setModal }) => {
               errors.name ? "border-red-500" : "border-gray-300"
             } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
-          <FaRegUser className="absolute top-[30px] left-2 text-gray-500" size={20} />
+          <FaRegUser
+            className="absolute top-[30px] left-2 text-gray-500"
+            size={20}
+          />
           {errors.name && (
             <p className="text-sm text-red-500 mt-0.5">{errors.name}</p>
           )}
@@ -165,7 +173,10 @@ const RazorpayPayment = ({ setModal }) => {
               errors.email ? "border-red-500" : "border-gray-300"
             } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
-          <MdOutlineMail className="absolute top-[30px] left-2 text-gray-500" size={20} />
+          <MdOutlineMail
+            className="absolute top-[30px] left-2 text-gray-500"
+            size={20}
+          />
           {errors.email && (
             <p className="text-sm text-red-500 mt-0.5">{errors.email}</p>
           )}
@@ -184,7 +195,10 @@ const RazorpayPayment = ({ setModal }) => {
               errors.phone ? "border-red-500" : "border-gray-300"
             } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
-          <MdOutlineLocalPhone className="absolute top-[30px] left-2 text-gray-500" size={20} />
+          <MdOutlineLocalPhone
+            className="absolute top-[30px] left-2 text-gray-500"
+            size={20}
+          />
           {errors.phone && (
             <p className="text-sm text-red-500 mt-0.5">{errors.phone}</p>
           )}
