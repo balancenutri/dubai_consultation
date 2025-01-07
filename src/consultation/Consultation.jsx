@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import RazorpayPayment from "../components/Payment";
 import WorkshopCard from "../workshop/Card";
-import ConsultationCard from "./Card";
+import ConsultationCard from "./ConsultationCard";
+// import ConsultationCard from "./Card";
 
 export default function Workshop() {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -18,23 +18,20 @@ import { useNavigate } from "react-router-dom";
 // import BookkedSuccessfully from "./BookkedSuccessfully";
 
 export default function BookConsultationForm({
-  id,
+  id = 104,
   consultation,
   transaction,
 }) {
-  const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [date, setDate] = useState(dayjs("2025-01-29").format("YYYY-MM-DD"));
   const [isOpen, setIsOpen] = useState(0);
   const [allSlot, setAllSlot] = useState([]);
   const [slot, setSlot] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
-
   const [loadingBooking, setLoadingBooking] = useState(false);
 
   const navigate = useNavigate();
-  //   console.log(date);
-  //   console.log(slot);
 
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
   const url = `${apiUrl}/dubai/book-consultation`;
@@ -42,14 +39,15 @@ export default function BookConsultationForm({
   useEffect(() => {
     const fetchSlots = async () => {
       try {
-        const consultationUrl = `${apiUrl}/dubai/check-slots?id=${104}&date=${dayjs().format(
-          "YYYY-MM-DD"
-        )}`;
+        setLoading(true);
+        const consultationUrl = `${apiUrl}/dubai/check-slots?id=${id}&date=${date}`;
         const response = await fetch(consultationUrl);
         const responseData = await response.json();
         setAllSlot(categorizeAppointmentss(responseData?.[0]?.data));
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -70,6 +68,26 @@ export default function BookConsultationForm({
     }
     return daysList;
   };
+
+  const getSpecificDates = () => {
+
+    const daysList = [];
+    const date1 = dayjs("2025-01-29");
+    const date2 = dayjs("2025-01-30");
+// Output: 30 Jan 2025
+
+    daysList.push({
+      name: `${date1.format("ddd")}, ${date1.format("DD MMM")}`,
+      value: date1.format("YYYY-MM-DD"),
+    });
+    daysList.push({
+      name: `${date2.format("ddd")}, ${date2.format("DD MMM")}`,
+      value: date2.format("YYYY-MM-DD"),
+    });
+
+    return daysList
+  };
+  
 
   //   const categorizeAppointments = (appointments) => {
   //     const categories = {
@@ -110,7 +128,7 @@ export default function BookConsultationForm({
       Morning: [],
       Afternoon: [],
       Evening: [],
-      LateEvening: [],
+      // LateEvening: [],
     };
 
     const allSlots = [
@@ -151,7 +169,7 @@ export default function BookConsultationForm({
           /(\d+):(\d+)\s(\w+)/,
           (match, h, m, p) => {
             let hour = parseInt(h, 10);
-            let minute = parseInt(m, 10) + 20;
+            let minute = parseInt(m, 10) + 25;
             if (minute >= 60) {
               minute -= 60;
               hour += 1;
@@ -180,11 +198,9 @@ export default function BookConsultationForm({
         categories.Morning.push(appointment);
       } else if (timeIn24HrFormat >= 12 && timeIn24HrFormat < 16) {
         categories.Afternoon.push(appointment);
-      } else if (timeIn24HrFormat >= 16 && timeIn24HrFormat < 20) {
-        categories.Evening.push(appointment);
       } else {
-        categories.LateEvening.push(appointment);
-      }
+        categories.Evening.push(appointment);
+      } 
     });
 
     const firstAvailableSlot = slots.find((slot) => slot.available);
@@ -205,7 +221,7 @@ export default function BookConsultationForm({
     setLoading(true);
     setDate(data);
     // setIsOpen(0);
-    const consultationUrl = `${apiUrl}/dubai/check-slots?id=${104}&date=${data}`;
+    const consultationUrl = `${apiUrl}/dubai/check-slots?id=${id}&date=${data}`;
     try {
       const response = await fetch(consultationUrl);
       const responseData = await response.json();
@@ -224,7 +240,7 @@ export default function BookConsultationForm({
     setIsOpen((prevState) => (prevState === index ? null : index));
   };
 
-  const dates = getDays(10);
+  const dates = getSpecificDates();
   //   console.log(dates);
 
   const getTimeIcon = (timeOfDay) => {
@@ -249,7 +265,7 @@ export default function BookConsultationForm({
       case "Afternoon":
         return "12:00 PM - 04:00 PM";
       case "Evening":
-        return "04:00 PM - 08:00 PM";
+        return "04:00 PM - 09:00 PM";
       case "LateEvening":
         return "08:00 PM - 10:00 PM";
       default:
@@ -331,14 +347,14 @@ export default function BookConsultationForm({
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-screen bg-gray-100">
-      <div className="bg-white w-[90vw] md:w-[400px] h-[500px] px-4 py-3 overflow-scroll scrollbar-hidden rounded-lg">
+      <div className="bg-white w-[90vw] md:w-[400px] h-[550px] px-4 py-3 overflow-scroll scrollbar-hidden rounded-lg">
         <h2 className="text-xl text-center font-medium">Book Your Slot</h2>
         <p className="mt-4 text-gray-500 font-medium">Select Date and Time</p>
 
         {/* Prevent body scroll */}
         <div
           ref={scrollContainerRef}
-          className="flex gap-1 pt-3 overflow-x-auto "
+          className="grid grid-cols-2 gap-1 pt-3 overflow-x-auto "
           style={{
             maxWidth: "100%",
             whiteSpace: "nowrap",
@@ -366,7 +382,7 @@ export default function BookConsultationForm({
 
         <hr />
 
-        <div className="border-t mb-2 shadow-sm h-[275px] overflow-scroll scrollbar-hidden">
+        <div className="border-t mb-2 shadow-sm h-[325px] overflow-scroll scrollbar-hidden">
           {Object.keys(allSlot).map((timeOfDay, index) => (
             <div key={index} className="border-b-2">
               <div
