@@ -643,6 +643,7 @@ const RazorpayPayment = ({ setModal }) => {
       email,
       phone_code: phoneCode,
       phone: phoneNumber,
+      currency,
       amount,
       admin_id: 104,
     };
