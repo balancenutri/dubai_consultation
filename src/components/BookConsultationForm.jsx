@@ -74,6 +74,7 @@ export default function BookConsultationForm({
     const daysList = [];
     const date1 = dayjs("2025-01-29");
     const date2 = dayjs("2025-01-30");
+    // const date3 = dayjs("2025-01-31");
 // Output: 30 Jan 2025
 
     daysList.push({
@@ -84,44 +85,13 @@ export default function BookConsultationForm({
       name: `${date2.format("ddd")}, ${date2.format("DD MMM")}`,
       value: date2.format("YYYY-MM-DD"),
     });
+    // daysList.push({
+    //   name: `${date3.format("ddd")}, ${date3.format("DD MMM")}`,
+    //   value: date3.format("YYYY-MM-DD"),
+    // });
 
     return daysList
   };
-  
-
-  //   const categorizeAppointments = (appointments) => {
-  //     const categories = {
-  //       Morning: [],
-  //       Afternoon: [],
-  //       Evening: [],
-  //       LateEvening: [],
-  //     };
-
-  //     appointments.forEach((appointment) => {
-  //       const { appointment_slots } = appointment;
-  //       const [startTime, period] = appointment_slots.split(" ");
-  //       const [hour, minute] = startTime.split(":").map(Number);
-
-  //       let timeIn24HrFormat =
-  //         period === "am" && hour === 12
-  //           ? 0
-  //           : period === "pm" && hour !== 12
-  //           ? hour + 12
-  //           : hour;
-
-  //       if (timeIn24HrFormat >= 6 && timeIn24HrFormat < 12) {
-  //         categories.Morning.push(appointment);
-  //       } else if (timeIn24HrFormat >= 12 && timeIn24HrFormat < 16) {
-  //         categories.Afternoon.push(appointment);
-  //       } else if (timeIn24HrFormat >= 16 && timeIn24HrFormat < 20) {
-  //         categories.Evening.push(appointment);
-  //       } else {
-  //         categories.LateEvening.push(appointment);
-  //       }
-  //     });
-
-  //     return categories;
-  //   };
 
   const categorizeAppointmentss = (appointments) => {
     const categories = {
@@ -196,7 +166,7 @@ export default function BookConsultationForm({
 
       if (timeIn24HrFormat >= 6 && timeIn24HrFormat < 12) {
         categories.Morning.push(appointment);
-      } else if (timeIn24HrFormat >= 12 && timeIn24HrFormat < 16) {
+      } else if (timeIn24HrFormat >= 12 && timeIn24HrFormat < 18) {
         categories.Afternoon.push(appointment);
       } else {
         categories.Evening.push(appointment);

@@ -282,8 +282,6 @@
 
 // export default RazorpayPayment;
 
-
-
 // import axios from "axios";
 // import React, { useState } from "react";
 // import { FaRegUser } from "react-icons/fa";
@@ -343,7 +341,7 @@
 //   const handlePhoneChange = (value, country) => {
 //     setPhoneCode(country.dialCode);
 //     setPhoneNumber(value.slice(country.dialCode.length));
-    
+
 //     const fieldErrors = { ...errors };
 //     if (!value) {
 //       fieldErrors.phone = "Phone number is required";
@@ -551,18 +549,16 @@
 
 // export default RazorpayPayment;
 
-
-
 import axios from "axios";
 import React, { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import BnLogo from "../assets/bn_logo.png";
 
-const RazorpayPayment = ({ setModal, amount }) => {
+const RazorpayPayment = ({ setModal }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -570,6 +566,8 @@ const RazorpayPayment = ({ setModal, amount }) => {
   const [currency, setCurrency] = useState("AED");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const amount = currency == "AED" ? 100 : 2400;
 
   const key = import.meta.env.VITE_RAZORPAY_KEY_ID;
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
@@ -579,9 +577,11 @@ const RazorpayPayment = ({ setModal, amount }) => {
     const errors = {};
     if (!name.trim()) errors.name = "Name is required";
     if (!email.trim()) errors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(email)) errors.email = "Invalid email address";
+    else if (!/\S+@\S+\.\S+/.test(email))
+      errors.email = "Invalid email address";
     if (!phoneNumber) errors.phone = "Phone number is required";
-    else if (phoneNumber.length < 8) errors.phone = "Phone number must be at least 8 digits";
+    else if (phoneNumber.length < 8)
+      errors.phone = "Phone number must be at least 8 digits";
     if (!currency) errors.currency = "Currency selection is required";
     setErrors(errors);
     return Object.keys(errors).length === 0;
@@ -621,7 +621,7 @@ const RazorpayPayment = ({ setModal, amount }) => {
   const handlePhoneChange = (value, country) => {
     setPhoneCode(country.dialCode);
     setPhoneNumber(value.slice(country.dialCode.length));
-    
+
     const fieldErrors = { ...errors };
     if (!value) {
       fieldErrors.phone = "Phone number is required";
@@ -757,14 +757,14 @@ const RazorpayPayment = ({ setModal, amount }) => {
             Enter Phone Number
           </label>
           <PhoneInput
-            country={'ae'}
+            country={"ae"}
             value={`${phoneCode}${phoneNumber}`}
             onChange={handlePhoneChange}
             // inputClass={`w-full h-12 text-base !px-4 !pl-12 py-3 text-gray-700 bg-white border ${
             //   errors.phone ? '!border-red-500' : '!border-gray-300'
             // } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
             // containerClass="!w-full"
-            buttonClass={errors.phone ? '!border-red-500' : ''}
+            buttonClass={errors.phone ? "!border-red-500" : ""}
           />
           {errors.phone && (
             <p className="text-sm text-red-500 mt-0.5">{errors.phone}</p>
@@ -772,7 +772,10 @@ const RazorpayPayment = ({ setModal, amount }) => {
         </div>
 
         <div className="flex flex-col space-y-1 mb-6 relative">
-          <label htmlFor="currency" className="text-sm font-medium text-gray-700">
+          <label
+            htmlFor="currency"
+            className="text-sm font-medium text-gray-700"
+          >
             Preferred currency for payment:
           </label>
           <div className="grid grid-cols-2">
@@ -786,7 +789,10 @@ const RazorpayPayment = ({ setModal, amount }) => {
                 onChange={(e) => handleChange("currency", e.target.value)}
                 className="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500"
               />
-              <label htmlFor="inr" className="ml-2 text-sm font-medium text-gray-700">
+              <label
+                htmlFor="inr"
+                className="ml-2 text-sm font-medium text-gray-700"
+              >
                 INR
               </label>
             </div>
@@ -800,7 +806,10 @@ const RazorpayPayment = ({ setModal, amount }) => {
                 onChange={(e) => handleChange("currency", e.target.value)}
                 className="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500"
               />
-              <label htmlFor="aed" className="ml-2 text-sm font-medium text-gray-700">
+              <label
+                htmlFor="aed"
+                className="ml-2 text-sm font-medium text-gray-700"
+              >
                 AED
               </label>
             </div>

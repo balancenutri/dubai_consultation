@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import WorkshopCard from "./Card";
 import RazorpayPayment from "../components/Payment";
+import WorkShopCard from "./WorkshopCard";
 
 export default function Workshop() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function Workshop() {
           }`}
         >
           <div className="absolute w-full h-full [backface-visibility:hidden] flex justify-center items-center rounded-lg ">
-            <WorkshopCard setModalControl={setIsModalOpen} />
+            <WorkShopCard setModalControl={setIsModalOpen} />
           </div>
           <div className="absolute w-full h-full [backface-visibility:hidden] flex justify-center items-center rounded-lg  [transform:rotateY(180deg)]">
             <RazorpayPayment setModal={setIsModalOpen} amount={50} />
