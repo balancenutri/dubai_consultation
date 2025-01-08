@@ -67,12 +67,12 @@ export default function ConsultationCard({ setModalControl }) {
           </p>
           <p className="text-sm">
             Ritu:{" "}
-            <Link
-              href="http://wa.me"
+            <a
+              href="tel:+91 7021985258"
               className="text-sm text-blue-500 underline  font-medium"
             >
               {data.phone}
-            </Link>
+            </a>
           </p>
         </div>
         <div className="w-6/12 flex items-end">
@@ -84,7 +84,7 @@ export default function ConsultationCard({ setModalControl }) {
           />
         </div>
       </div>
-      <div className="bg-white p-2 rounded-lg"> 
+      <div className="bg-white p-2 rounded-lg">
         <button
           onClick={() => setModalControl(true)}
           className="py-3 w-full bg-[#00B6C1] text-white font-semibold shadow-xl transition duration-300 rounded-lg "
