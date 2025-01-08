@@ -64,14 +64,14 @@ export default function ConsultationCard({ setModalControl }) {
             </p>
           </div>
 
-          <p className="text-sm font-medium mt-6 underline">
+          <p className="text-base font-medium mt-6 underline">
             For Details Contact:
           </p>
-          <p className="text-sm">
+          <p className="text-base">
             Ritu:{" "}
             <Link
               to={`https://wa.me/+917021985258?text=${data.whatsapp_text}`}
-              className="text-sm text-blue-500 underline font-medium"
+              className="text-base text-blue-500 underline font-medium"
               target="_blank"
             >
               {data.phone}
