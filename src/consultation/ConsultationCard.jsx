@@ -13,6 +13,8 @@ export default function ConsultationCard({ setModalControl }) {
     date: "29th & 30th January 2025",
     venue: "Business Bay, UAE",
     phone: "+91 7021985258",
+    whatsapp_text:
+      "Hi, I’d like to book an appointment with Khyati in Dubai. Please let me know the available slots. Thank you!",
   };
   return (
     <div className="w-[450px] rounded-lg border-2 bg-white border-[#3FBEC9] mx-4">
@@ -67,12 +69,13 @@ export default function ConsultationCard({ setModalControl }) {
           </p>
           <p className="text-sm">
             Ritu:{" "}
-            <a
-              href="tel:+91 7021985258"
-              className="text-sm text-blue-500 underline  font-medium"
+            <Link
+              to={`https://wa.me/+917021985258?text=${data.whatsapp_text}`}
+              className="text-sm text-blue-500 underline font-medium"
+              target="_blank"
             >
               {data.phone}
-            </a>
+            </Link>
           </p>
         </div>
         <div className="w-6/12 flex items-end">
