@@ -557,6 +557,7 @@ import { useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import BnLogo from "../assets/bn_logo.png";
+import { isValidPhoneNumber } from "libphonenumber-js";
 
 const RazorpayPayment = ({ setModal }) => {
   const [email, setEmail] = useState("");
@@ -618,18 +619,37 @@ const RazorpayPayment = ({ setModal }) => {
     setErrors(fieldErrors);
   };
 
+  // const handlePhoneChange = (value, country) => {
+  //   setPhoneCode(country.dialCode);
+  //   setPhoneNumber(value.slice(country.dialCode.length));
+
+  //   const fieldErrors = { ...errors };
+  //   if (!value) {
+  //     fieldErrors.phone = "Phone number is required";
+  //   } else if (value.length < 8) {
+  //     fieldErrors.phone = "Phone number must be at least 8 digits";
+  //   } else {
+  //     delete fieldErrors.phone;
+  //   }
+  //   setErrors(fieldErrors);
+  // };
+
   const handlePhoneChange = (value, country) => {
     setPhoneCode(country.dialCode);
     setPhoneNumber(value.slice(country.dialCode.length));
 
+    const phoneWithCode = `+${country.dialCode}${value.slice(country.dialCode.length)}`;
     const fieldErrors = { ...errors };
+
+    // Validate the phone number based on the country code
     if (!value) {
       fieldErrors.phone = "Phone number is required";
-    } else if (value.length < 8) {
-      fieldErrors.phone = "Phone number must be at least 8 digits";
+    } else if (!isValidPhoneNumber(phoneWithCode)) {
+      fieldErrors.phone = "Invalid phone number";
     } else {
       delete fieldErrors.phone;
     }
+
     setErrors(fieldErrors);
   };
 
