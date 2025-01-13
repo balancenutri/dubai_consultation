@@ -12,7 +12,7 @@ export default function ConsultationCard({ setModalControl }) {
     place: "DUBAI",
     date: "29th & 30th January 2025",
     venue: "Business Bay, UAE",
-    phone: "+91 7021985258",
+    phone: "+91 9152419848",
     whatsapp_text:
       "Hi, I’d like to book an appointment with Khyati in Dubai. Please let me know the available slots. Thank you!",
   };
@@ -68,9 +68,9 @@ export default function ConsultationCard({ setModalControl }) {
             For Details Contact:
           </p>
           <p className="text-base">
-            Ritu:{" "}
+          Barkha:{" "}
             <Link
-              to={`https://wa.me/+917021985258?text=${data.whatsapp_text}`}
+              to={`https://wa.me/+919152419848?text=${data.whatsapp_text}`}
               className="text-base text-blue-500 underline font-medium"
               target="_blank"
             >
