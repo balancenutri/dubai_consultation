@@ -85,10 +85,6 @@ export default function BookConsultationForm({
       name: `${date2.format("ddd")}, ${date2.format("DD MMM")}`,
       value: date2.format("YYYY-MM-DD"),
     });
-    // daysList.push({
-    //   name: `${date3.format("ddd")}, ${date3.format("DD MMM")}`,
-    //   value: date3.format("YYYY-MM-DD"),
-    // });
 
     return daysList
   };
