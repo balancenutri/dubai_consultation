@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import React, { useState } from "react";
 import { FaRegUser } from "react-icons/fa";
@@ -8,6 +7,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import BnLogo from "../assets/bn_logo.png";
 import { isValidPhoneNumber } from "libphonenumber-js";
+import { LuLoader } from "react-icons/lu";
 
 const RazorpayPayment = ({ setModal }) => {
   const [email, setEmail] = useState("");
@@ -16,6 +16,7 @@ const RazorpayPayment = ({ setModal }) => {
   const [phoneCode, setPhoneCode] = useState("");
   const [currency, setCurrency] = useState("AED");
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const amount = currency == "AED" ? 100 : 2400;
@@ -88,7 +89,9 @@ const RazorpayPayment = ({ setModal }) => {
     setPhoneCode(country.dialCode);
     setPhoneNumber(value.slice(country.dialCode.length));
 
-    const phoneWithCode = `+${country.dialCode}${value.slice(country.dialCode.length)}`;
+    const phoneWithCode = `+${country.dialCode}${value.slice(
+      country.dialCode.length
+    )}`;
     const fieldErrors = { ...errors };
 
     // Validate the phone number based on the country code
@@ -118,9 +121,14 @@ const RazorpayPayment = ({ setModal }) => {
       admin_id: 104,
     };
 
+    setLoading(true);
+
     try {
       const responses = await axios.post(api, data);
       console.log("Form submitted successfully:", responses.data.data);
+      if (responses.data?.status === "success") {
+        setLoading(false);
+      }
       const options = {
         key: key,
         amount: amount * 100,
@@ -162,7 +170,12 @@ const RazorpayPayment = ({ setModal }) => {
   };
 
   return (
-    <div className="md:w-[420px] bg-white shadow-lg rounded-xl px-6 py-8 mx-2">
+    <div className="md:w-[420px] min bg-white shadow-lg rounded-xl px-6 py-8 mx-2">
+      {loading && (
+        <div className="flex justify-center items-center py-4 z-50 fixed inset-0 opacity-20 bg-black">
+          <LuLoader className="animate-spin text-blue-500" size={30} />
+        </div>
+      )}
       <div className="flex justify-center -mt-2">
         <img
           src={BnLogo}
@@ -174,7 +187,6 @@ const RazorpayPayment = ({ setModal }) => {
       <h2 className="text-center text-2xl font-semibold text-gray-800 mb-4">
         Enter Your Details
       </h2>
-
       <form onSubmit={handlePayment}>
         <div className="flex flex-col space-y-1 mb-4 relative">
           <label htmlFor="name" className="text-sm font-medium text-gray-700">
