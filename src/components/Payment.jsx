@@ -8,6 +8,7 @@ import "react-phone-input-2/lib/style.css";
 import BnLogo from "../assets/bn_logo.png";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import { LuLoader } from "react-icons/lu";
+import { RiLoader2Line } from "react-icons/ri";
 
 const RazorpayPayment = ({ setModal }) => {
   const [email, setEmail] = useState("");
@@ -170,152 +171,160 @@ const RazorpayPayment = ({ setModal }) => {
   };
 
   return (
-    <div className="md:w-[420px] min bg-white shadow-lg rounded-xl px-6 py-8 mx-2">
+    <>
       {loading && (
-        <div className="flex justify-center items-center py-4 z-50 fixed inset-0 opacity-20 bg-black">
-          <LuLoader className="animate-spin text-blue-500" size={30} />
+        <div className="flex justify-center items-center w-full h-full py-4 z-50 fixed inset-0">
+          <RiLoader2Line className="animate-spin text-blue-500" size={50} />
         </div>
       )}
-      <div className="flex justify-center -mt-2">
-        <img
-          src={BnLogo}
-          alt=""
-          srcSet=""
-          className="size-10 object-contain rounded-md"
-        />
-      </div>
-      <h2 className="text-center text-2xl font-semibold text-gray-800 mb-4">
-        Enter Your Details
-      </h2>
-      <form onSubmit={handlePayment}>
-        <div className="flex flex-col space-y-1 mb-4 relative">
-          <label htmlFor="name" className="text-sm font-medium text-gray-700">
-            Enter Your Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => handleChange("name", e.target.value)}
-            className={`w-full h-10 text-base px-4 pl-10 py-3 text-gray-700 bg-white border ${
-              errors.name ? "border-red-500" : "border-gray-300"
-            } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
+      <div className="md:w-[420px] min bg-white shadow-lg rounded-xl px-6 py-8 mx-2">
+        <div className="flex justify-center -mt-2">
+          <img
+            src={BnLogo}
+            alt=""
+            srcSet=""
+            className="size-10 object-contain rounded-md"
           />
-          <FaRegUser
-            className="absolute top-[30px] left-2 text-gray-500"
-            size={20}
-          />
-          {errors.name && (
-            <p className="text-sm text-red-500 mt-0.5">{errors.name}</p>
-          )}
         </div>
-
-        <div className="flex flex-col space-y-1 mb-4 relative">
-          <label htmlFor="email" className="text-sm font-medium text-gray-700">
-            Enter Email Address
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => handleChange("email", e.target.value)}
-            className={`w-full h-10 text-base px-4 pl-10 py-3 text-gray-700 bg-white border ${
-              errors.email ? "border-red-500" : "border-gray-300"
-            } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
-          />
-          <MdOutlineMail
-            className="absolute top-[30px] left-2 text-gray-500"
-            size={20}
-          />
-          {errors.email && (
-            <p className="text-sm text-red-500 mt-0.5">{errors.email}</p>
-          )}
-        </div>
-
-        <div className="flex flex-col space-y-1 mb-6">
-          <label htmlFor="phone" className="text-sm font-medium text-gray-700">
-            Enter Phone Number
-          </label>
-          <PhoneInput
-            country={"ae"}
-            value={`${phoneCode}${phoneNumber}`}
-            onChange={handlePhoneChange}
-            // inputClass={`w-full h-12 text-base !px-4 !pl-12 py-3 text-gray-700 bg-white border ${
-            //   errors.phone ? '!border-red-500' : '!border-gray-300'
-            // } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            // containerClass="!w-full"
-            buttonClass={errors.phone ? "!border-red-500" : ""}
-          />
-          {errors.phone && (
-            <p className="text-sm text-red-500 mt-0.5">{errors.phone}</p>
-          )}
-        </div>
-
-        <div className="flex flex-col space-y-1 mb-6 relative">
-          <label
-            htmlFor="currency"
-            className="text-sm font-medium text-gray-700"
-          >
-            Preferred currency for payment:
-          </label>
-          <div className="grid grid-cols-2">
-            <div className="flex items-center">
-              <input
-                type="radio"
-                id="inr"
-                name="currency"
-                value="INR"
-                checked={currency === "INR"}
-                onChange={(e) => handleChange("currency", e.target.value)}
-                className="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500"
-              />
-              <label
-                htmlFor="inr"
-                className="ml-2 text-sm font-medium text-gray-700"
-              >
-                INR
-              </label>
-            </div>
-            <div className="flex items-center">
-              <input
-                type="radio"
-                id="aed"
-                name="currency"
-                value="AED"
-                checked={currency === "AED"}
-                onChange={(e) => handleChange("currency", e.target.value)}
-                className="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500"
-              />
-              <label
-                htmlFor="aed"
-                className="ml-2 text-sm font-medium text-gray-700"
-              >
-                AED
-              </label>
-            </div>
+        <h2 className="text-center text-2xl font-semibold text-gray-800 mb-4">
+          Enter Your Details
+        </h2>
+        <form onSubmit={handlePayment}>
+          <div className="flex flex-col space-y-1 mb-4 relative">
+            <label htmlFor="name" className="text-sm font-medium text-gray-700">
+              Enter Your Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => handleChange("name", e.target.value)}
+              className={`w-full h-10 text-base px-4 pl-10 py-3 text-gray-700 bg-white border ${
+                errors.name ? "border-red-500" : "border-gray-300"
+              } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            />
+            <FaRegUser
+              className="absolute top-[30px] left-2 text-gray-500"
+              size={20}
+            />
+            {errors.name && (
+              <p className="text-sm text-red-500 mt-0.5">{errors.name}</p>
+            )}
           </div>
-          {errors.currency && (
-            <p className="text-sm text-red-500 mt-0.5">{errors.currency}</p>
-          )}
-        </div>
 
-        <div className="flex justify-center items-center gap-4 mt-4">
-          <button
-            type="button"
-            className="w-full py-2 bg-gray-400 text-white font-semibold rounded-lg hover:bg-gray-500 transition duration-300 ease-in-out"
-            onClick={() => setModal(false)}
-          >
-            Back
-          </button>
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out"
-          >
-            Pay Now
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="flex flex-col space-y-1 mb-4 relative">
+            <label
+              htmlFor="email"
+              className="text-sm font-medium text-gray-700"
+            >
+              Enter Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => handleChange("email", e.target.value)}
+              className={`w-full h-10 text-base px-4 pl-10 py-3 text-gray-700 bg-white border ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            />
+            <MdOutlineMail
+              className="absolute top-[30px] left-2 text-gray-500"
+              size={20}
+            />
+            {errors.email && (
+              <p className="text-sm text-red-500 mt-0.5">{errors.email}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col space-y-1 mb-6">
+            <label
+              htmlFor="phone"
+              className="text-sm font-medium text-gray-700"
+            >
+              Enter Phone Number
+            </label>
+            <PhoneInput
+              country={"ae"}
+              value={`${phoneCode}${phoneNumber}`}
+              onChange={handlePhoneChange}
+              // inputClass={`w-full h-12 text-base !px-4 !pl-12 py-3 text-gray-700 bg-white border ${
+              //   errors.phone ? '!border-red-500' : '!border-gray-300'
+              // } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              // containerClass="!w-full"
+              buttonClass={errors.phone ? "!border-red-500" : ""}
+            />
+            {errors.phone && (
+              <p className="text-sm text-red-500 mt-0.5">{errors.phone}</p>
+            )}
+          </div>
+
+          <div className="flex flex-col space-y-1 mb-6 relative">
+            <label
+              htmlFor="currency"
+              className="text-sm font-medium text-gray-700"
+            >
+              Preferred currency for payment:
+            </label>
+            <div className="grid grid-cols-2">
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="inr"
+                  name="currency"
+                  value="INR"
+                  checked={currency === "INR"}
+                  onChange={(e) => handleChange("currency", e.target.value)}
+                  className="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="inr"
+                  className="ml-2 text-sm font-medium text-gray-700"
+                >
+                  INR
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="aed"
+                  name="currency"
+                  value="AED"
+                  checked={currency === "AED"}
+                  onChange={(e) => handleChange("currency", e.target.value)}
+                  className="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500"
+                />
+                <label
+                  htmlFor="aed"
+                  className="ml-2 text-sm font-medium text-gray-700"
+                >
+                  AED
+                </label>
+              </div>
+            </div>
+            {errors.currency && (
+              <p className="text-sm text-red-500 mt-0.5">{errors.currency}</p>
+            )}
+          </div>
+
+          <div className="flex justify-center items-center gap-4 mt-4">
+            <button
+              type="button"
+              className="w-full py-2 bg-gray-400 text-white font-semibold rounded-lg hover:bg-gray-500 transition duration-300 ease-in-out"
+              onClick={() => setModal(false)}
+            >
+              Back
+            </button>
+            <button
+              type="submit"
+              className="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out"
+            >
+              Pay Now
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 
