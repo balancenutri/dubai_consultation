@@ -4,6 +4,8 @@ import Congrates from "./components/Congrates";
 import Home from "./components/Home";
 import Workshop from "./workshop/Workshop";
 import Consultation from "./consultation/Consultation";
+import BookSlot from "./components/BookSlot";
+import AvailableSlots from "./components/AvailableSlots";
 
 export default function App() {
   return (
@@ -14,6 +16,8 @@ export default function App() {
           <Route path="/congrats" element={<Congrates />} />
           {/* <Route path="/workshop" element={<Workshop />} /> */}
           <Route path="/" element={<Consultation />} />
+          <Route path="/book/:id" element={<BookSlot />} />
+          <Route path="/slots" element={<AvailableSlots />} />
         </Routes>
       </Router>
     </>

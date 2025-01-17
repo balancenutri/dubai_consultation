@@ -17,24 +17,18 @@ import {
 import { useNavigate } from "react-router-dom";
 // import BookkedSuccessfully from "./BookkedSuccessfully";
 
-export default function BookConsultationForm({
+export default function AvailableSlots({
   id = 104,
-  consultation,
-  transaction,
 }) {
   const [date, setDate] = useState(dayjs("2025-01-29").format("YYYY-MM-DD"));
   const [isOpen, setIsOpen] = useState(0);
   const [allSlot, setAllSlot] = useState([]);
   const [slot, setSlot] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [confirmModal, setConfirmModal] = useState(false);
-  const [loadingBooking, setLoadingBooking] = useState(false);
 
   const navigate = useNavigate();
 
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
-  const url = `${apiUrl}/dubai/book-consultation`;
 
   useEffect(() => {
     const fetchSlots = async () => {
@@ -88,100 +82,6 @@ export default function BookConsultationForm({
     return daysList;
   };
 
-  // const categorizeAppointmentss = (appointments) => {
-  //   console.log(appointments);
-  //   const categories = {
-  //     Morning: [],
-  //     Afternoon: [],
-  //     Evening: [],
-  //     // LateEvening: [],
-  //   };
-
-  //   const allSlots = [
-  //     "10:00 am",
-  //     "10:30 am",
-  //     "11:00 am",
-  //     "11:30 am",
-  //     "12:00 pm",
-  //     "12:30 pm",
-  //     "01:00 pm",
-  //     "01:30 pm",
-  //     "02:00 pm",
-  //     "02:30 pm",
-  //     "03:00 pm",
-  //     "03:30 pm",
-  //     "04:00 pm",
-  //     "04:30 pm",
-  //     "05:00 pm",
-  //     "05:30 pm",
-  //     "06:00 pm",
-  //     "06:30 pm",
-  //     "07:00 pm",
-  //     "07:30 pm",
-  //     "08:00 pm",
-  //     "08:30 pm",
-  //     "09:00 pm",
-  //   ];
-
-  //   const slots = allSlots.map((slot, index) => {
-  //     // const available = appointments.some((app) =>
-  //     //   app?.appointment_slots?.includes(slot)
-  //     // );
-  //     const available = appointments?.some((app) =>
-  //       app?.appointment_slots?.includes(slot)
-  //     ) || false;
-  //     // console.log({ available: available });
-  //     return {
-  //       id: index + 1,
-  //       appointment_slots: `${slot} - ${slot.replace(
-  //         /(\d+):(\d+)\s(\w+)/,
-  //         (match, h, m, p) => {
-  //           let hour = parseInt(h, 10);
-  //           let minute = parseInt(m, 10) + 25;
-  //           if (minute >= 60) {
-  //             minute -= 60;
-  //             hour += 1;
-  //           }
-  //           if (hour > 12) hour -= 12;
-  //           return `${hour}:${minute.toString().padStart(2, "0")} ${p}`;
-  //         }
-  //       )}`,
-  //       available,
-  //     };
-  //   });
-
-  //   slots.forEach((appointment) => {
-  //     const { appointment_slots } = appointment;
-  //     const [startTime, period] = appointment_slots.split(" ");
-  //     const [hour, minute] = startTime.split(":").map(Number);
-
-  //     let timeIn24HrFormat =
-  //       period === "am" && hour === 12
-  //         ? 0
-  //         : period === "pm" && hour !== 12
-  //         ? hour + 12
-  //         : hour;
-
-  //     if (timeIn24HrFormat >= 6 && timeIn24HrFormat < 12) {
-  //       categories.Morning.push(appointment);
-  //     } else if (timeIn24HrFormat >= 12 && timeIn24HrFormat < 18) {
-  //       categories.Afternoon.push(appointment);
-  //     } else {
-  //       categories.Evening.push(appointment);
-  //     }
-  //   });
-
-  //   const firstAvailableSlot = slots.find((slot) => slot.available);
-
-  //   if (firstAvailableSlot.id < 5) {
-  //     setIsOpen(0);
-  //   } else if (firstAvailableSlot.id < 17) {
-  //     setIsOpen(1);
-  //   } else {
-  //     setIsOpen(2);
-  //   }
-  //   return categories;
-  // };
 
   const categorizeAppointmentss = (appointments) => {
 
@@ -349,66 +249,6 @@ export default function BookConsultationForm({
     }
   }, [date]);
 
-  const handleSubmit = async () => {
-    // console.log("Form submitted");
-    if (!date || !slot) {
-      toast.error("Please select a date and time");
-      return;
-    }
-
-    setConfirmModal(true);
-  };
-
-  // const handleBooked = async () => {
-  //   const data = {
-  //     schedule_date: date,
-  //     slot_id: slot.id,
-  //     consultation_id: consultation,
-  //   };
-  //   const responses = await axios.post(url, data);
-  //   console.log("Form submitted successfully:", responses.data);
-
-  //   if (responses.data?.status == "success") {
-  //     toast.success("Consultation Booked Successfully...");
-  //     setConfirmModal(false);
-  //     setIsModalOpen(true); //
-  //   } else {
-  //     toast.error("Failed to book consultation");
-  //     setConfirmModal(false);
-  //   }
-  // };
-
-  const handleBooked = async () => {
-    // Set the loading state to true when starting the API call
-    setLoadingBooking(true);
-
-    const data = {
-      schedule_date: date,
-      slot_id: slot.id,
-      consultation_id: consultation,
-    };
-
-    try {
-      const responses = await axios.post(url, data);
-      // console.log("Form submitted successfully:", responses.data);
-
-      if (responses.data?.status === "success") {
-        toast.success("Consultation Booked Successfully...");
-        setConfirmModal(false);
-        setIsModalOpen(true);
-      } else {
-        toast.error("Failed to book consultation");
-        setConfirmModal(false);
-      }
-    } catch (error) {
-      // console.error("Booking error:", error);
-      toast.error("An error occurred while booking");
-    } finally {
-      setLoadingBooking(false);
-    }
-  };
-
-  // console.log(allSlot);
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-screen bg-gray-100">
@@ -513,113 +353,13 @@ export default function BookConsultationForm({
 
         <div className="flex justify-center items-center mt-4">
           <button
-            onClick={handleSubmit}
+            onClick={() => navigate("/", { replace: true, state: null })}
             className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           >
-            Book Now
+            Back to Home Page
           </button>
         </div>
       </div>
-
-      {isModalOpen && (
-        <div
-          id="modal"
-          className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center"
-        >
-          <div className="w-84 h-68 bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center text-center">
-            <div>
-              <FaRegCheckCircle className="text-green-500 text-5xl mb-2" />
-            </div>
-            <h2 className="text-lg font-semibold text-gray-700 mb-2">
-              Booking Confirmed!
-            </h2>
-            <p className="text-sm font-medium">ID: 542135656</p>
-            <p className="text-sm mt-2 font-medium text-gray-500 mb-4">
-              Comfirmation email and message has been sent <br />
-              to your registered details
-            </p>
-
-            <div className="flex flex-col items-center mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <FaCalendarAlt className="text-blue-500" />
-                <span className="text-sm font-medium text-gray-600">
-                  {dayjs(date).format("dddd")},{" "}
-                  {dayjs(date).format("DD MMM YYYY")}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FaClock className="text-yellow-500" />
-                <span className="text-sm font-medium text-gray-600">
-                  {slot.time?.toUpperCase()}
-                </span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => {
-                // navigate("/congrats", { replace: true, state: null });
-                navigate("/", { replace: true, state: null });
-              }}
-              className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200"
-            >
-              Alright !
-            </button>
-          </div>
-        </div>
-      )}
-      {confirmModal &&
-        (loadingBooking ? (
-          <div className="flex justify-center items-center py-4 fixed inset-0 bg-black bg-opacity-20">
-            <FaSpinner className="animate-spin text-blue-500" size={50} />
-          </div>
-        ) : (
-          <div
-            id="modal"
-            className="fixed inset-0 bg-black bg-opacity-20 flex justify-center items-center"
-          >
-            <div className="w-84 h-68 bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center text-center">
-              <div>
-                <FaRegCheckCircle className="text-green-500 text-5xl mb-2" />
-              </div>
-              <h2 className="text-lg font-semibold text-gray-700 mb-2">
-                Please Confirm
-              </h2>
-              {/* <p className="text-sm font-medium text-gray-500 mb-4">
-              Are you sure you want to book consultation
-            </p> */}
-
-              <div className="flex flex-col items-center mb-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <FaCalendarAlt className="text-blue-500" />
-                  <span className="text-sm font-medium text-gray-600">
-                    {dayjs(date).format("DD-MM-YYYY")}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaClock className="text-yellow-500" />
-                  <span className="text-sm font-medium text-gray-600">
-                    {slot.time}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex gap-10">
-                <button
-                  onClick={() => setConfirmModal(false)}
-                  className="bg-red-400 text-sm text-white font-medium px-4 py-2 rounded-md hover:bg-red-500 transition duration-200"
-                >
-                  Change Slot
-                </button>
-                <button
-                  onClick={handleBooked}
-                  className="bg-green-500 text-sm text-white font-medium px-4 py-2 rounded-md hover:bg-green-600 transition duration-200"
-                >
-                  Confirm
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
     </div>
   );
 }
