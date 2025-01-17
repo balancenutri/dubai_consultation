@@ -11,7 +11,7 @@ export default function ConsultationCard({ setModalControl }) {
     designation: "Clinical Nutritionist",
     place: "DUBAI",
     date: "29th & 30th January 2025",
-    venue: "Business Bay, UAE",
+    venue: "Taj Dubai, Business Bay",
     phone: "+91 9152419848",
     whatsapp_text:
       "Hi, I’d like to book an appointment with Khyati in Dubai. Please let me know the available slots. Thank you!",
