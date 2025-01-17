@@ -12,9 +12,9 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/$1",
+      "dest": "/index.html",
       "headers": {
-        "x-rewrite": "/index.html"
+        "Cache-Control": "s-maxage=0"
       }
     }
   ]
