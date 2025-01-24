@@ -6,18 +6,19 @@ import Workshop from "./workshop/Workshop";
 import Consultation from "./consultation/Consultation";
 import BookSlot from "./components/BookSlot";
 import AvailableSlots from "./components/AvailableSlots";
+import Test from "./components/Test";
 
 export default function App() {
   return (
     <>
       <Router>
         <Routes>
+          <Route path="/" element={<Test />} />
           {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/congrats" element={<Congrates />} />
           {/* <Route path="/workshop" element={<Workshop />} /> */}
-          <Route path="/" element={<Consultation />} />
+          {/* <Route path="/" element={<Consultation />} />
           <Route path="/book/:id" element={<BookSlot />} />
-          <Route path="/slots" element={<AvailableSlots />} />
+          <Route path="/slots" element={<AvailableSlots />} /> */}
         </Routes>
       </Router>
     </>
